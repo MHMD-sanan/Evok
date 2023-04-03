@@ -1,0 +1,78 @@
+<%-include('../../layout/header.ejs')%>
+<section class="py-5 header">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-3">
+              <!-- Tabs nav -->
+                <div class="nav flex-column nav-pills nav-pills-custom" >
+                    <a class="nav-link mb-3 p-3 shadow" href="/profile">
+                      <span class="font-weight-bold small text-uppercase">Personal information</span>
+                    </a>
+
+                    <a class="nav-link mb-3 p-3 shadow" href="/address">
+                        <span class="font-weight-bold small text-uppercase">Addresses</span>
+                    </a>
+                    <a class="nav-link mb-3 p-3 shadow active">
+                        <span class="font-weight-bold small text-uppercase">Orders</span>
+                    </a>
+                </div>
+          </div>
+
+          <div class="col-md-9">
+              <!-- Tabs content -->
+              <div class="tab-content" id="v-pills-tabContent">
+                  <div class="tab-pane fade shadow rounded bg-white show active p-5" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <h4 class="font-italic mb-4">My Orders</h4>
+                    <%if(order==null || order.length==0){%>
+                      <p>No orders Made</p>
+                    <%}else{%>
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">Order Id</th>
+                              <th scope="col">Order Date</th>
+                              <th scope="col">Order Total</th>
+                              <th scope="col">Payment</th>
+                              <th scope="col">Status</th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <%order.forEach((item)=>{%>
+                            <tr>
+                              <%let date = item.date%>
+                              <%let isoString = date.toISOString()%>
+                              <%let newDate = isoString.split('T')[0]%>
+                              <td><%=item._id%></td>
+                              <td><%=newDate%></td>
+                              <td>$<%=item.products.totalPrice%></td>
+                              <td><%=item.payment%></td>
+                              <td><%=item.status%></td>
+                              <td>
+                                <%if(item.status=="Cancelled"){%>
+                                  
+                                <%}else if(item.status=="Delivered"){%>
+
+                                <%}else{%>
+                                  <form action="/cancelOrder" method="post">
+                                    <input type="hidden" name="orderId" value="<%=item._id%>">
+                                    <button class="btn-danger" style="border-radius: 10px; border: 0;" type="submit">Cancel</button>
+                                  </form>
+                                <%}%>
+                              </td>
+                            </tr>
+                            <%})%>
+                          </tbody>
+                        </table>
+                      </div>
+                    <%}%>
+                  </div>                
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<%-include('../../layout/footer.ejs')%>

@@ -1,0 +1,69 @@
+<%-include('./layout/header.ejs')%>
+
+  <script>
+    function openForm() {
+      document.getElementById("popupForm").style.display = "block";
+    }
+    function closeForm() {
+      document.getElementById("popupForm").style.display = "none";
+    }
+  </script>
+  <div class="container-fluid px-4">
+    <div class="openBtn">
+      <button class="openButton my-3 me-2" onclick="openForm()"><strong>Add category</strong></button>
+    </div>
+    <div class="loginPopup">
+      <div class="formPopup" id="popupForm">
+        <form action="/admin_panel/category" class="formContainer" method="post" enctype="multipart/form-data">
+          <label for="email">
+            <strong>Category Name</strong>
+          </label>
+          <input type="text" id="email" placeholder="category name" name="name" required>
+          <br><br>
+          <button type="submit" class="btn">Add</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Category List
+      </div>
+      <div class="card-body">
+        <% if(details!=null) { %>
+          <table id="example" class="display">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% details.forEach(function(category){ %>
+                <tr>
+                  <td>
+                    <%=category.name%>
+                  </td>
+                  <td>
+                    <a class="btn btn-primary" href="/admin_panel/editCategory?id=<%=category._id%>"
+                      role="button">Edit</a>
+                    <% if(category.status==true) {%>
+                      <a class="btn btn-danger" href="/admin_panel/statusCategory?id=<%= category._id%>"
+                        role="button">Unlist</a>
+                      <%}else{%>
+                        <a class="btn btn-success" href="/admin_panel/statusCategory?id=<%= category._id%>"
+                          role="button">List</a>
+                        <%}%>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%-include('./layout/footer.ejs')%>

@@ -1,0 +1,82 @@
+<%-include('../../layout/header.ejs')%>
+
+<%if(product!=null){%>
+    <div class="mesage d-flex justify-content-end mt-3">
+        <%if(error!=null){%>
+            <%if(error.length!=0){%>
+                <div class="alert alert-danger" role="alert" style="position: absolute; z-index:1;">
+                    <%=error%>
+                </div>
+            <%}%>
+        <%}%>
+        <%if(success!=null){%>
+            <%if(success.length!=0){%>
+                <div class="alert alert-success" role="alert" style="position: absolute; z-index:1;">
+                    <%=success%>
+                </div>
+            <%}%>
+        <%}%>
+    </div>
+
+    <div class="container-fluid mt-3 mb-3">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="images p-3">
+                                <a href="/shop" style="text-decoration: none;"><div class="d-flex align-items-center"> <Back class="fa fa-long-arrow-left">Back</div></a>
+                                <div class="text-center p-4"> <img id="main-image" src="<%=product.image%>" width="250" /> </div> 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product p-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <form action="/wishList" method="post">
+                                        <input  type="hidden" value="<%=product._id%>" name="productId">
+                                        <button type="submit" style="border: 0;background-color: white;"><i class="fa fa-heart"></i></button>
+                                    </form>
+                                </div>
+                                <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand"></span>
+                                    <h5 class="text-uppercase"><%=product.name%>.</h5>
+                                    <div class="price d-flex flex-row align-items-center"> <span class="act-price text-black">$ <%=product.price%></span>
+                                    </div>
+                                </div>
+                                <p><b>Overview</b></p>
+                                <p class="about"><%=product.description%>.</p>
+                                <div id="test">
+                                    <%if(isLogin==null){%>
+                                        <div class="cart mt-4 align-items-center">
+                                            <div class="cart mt-4 align-items-center"> <button class="btn btn-primary btn-sm text-uppercase mr-2 px-4" onclick="addToCart('<%=product._id%>') " >Add to cart</button></i> </div>
+                                        </div>
+                                    <%}else{%>
+                                        <%const isExisting = cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(product._id).trim())%>
+                                        <%if(isExisting==-1){%>
+                                            <div class="cart mt-4 align-items-center">
+                                                <div class="cart mt-4 align-items-center"> <button class="btn btn-primary btn-sm text-uppercase mr-2 px-4" onclick="addToCart('<%=product._id%>') " >Add to cart</button></i> </div>
+                                            </div>
+                                        <%}else{%>
+                                            <div class="cart mt-4 align-items-center">
+                                                <div class="cart mt-4 align-items-center"> <a  href="/cart" class="btn btn-primary btn-sm text-uppercase mr-2 px-4">Go to cart</a></i> </div>
+                                            </div>
+                                        <%}%>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row m-4">
+                                <h3>Related Items</h3>
+                                <div class="col-md-2">1</div>
+                                <div class="col-md-2">1</div>
+                                <div class="col-md-2">1</div>
+                                <div class="col-md-2">1</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%}%>
+
+<%-include('../../layout/footer.ejs')%>
