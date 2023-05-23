@@ -6,12 +6,12 @@ const eachProduct = async (req, res) => {
     try {
         const isLogin=req.session.user_id;
         const cart=await User.findById(req.session.user_id);
-        if(cart.length!=0 || cart!=null){
+        if(cart){
             res.render('../view/user/partials/shop/product.ejs', { product,isLogin,cart:cart.cart,error:req.flash('error'),success:req.flash('success') })
         }else{
             const error=null;
             const success=null;
-            const isLogin=null;
+            const isLogin = null;
             const cart=null;
             res.render('../view/user/partials/shop/product.ejs', { product,isLogin,cart,error,success});
             console.log("else worked inn product.js");

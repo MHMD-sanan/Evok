@@ -25,18 +25,6 @@ app.use(fileupload({
     useTempFiles:true
 }))
 
-
-// TESTING PURPOSE
-app.get('/test',(req,res)=>{
-    res.render('test.ejs');
-});
-app.post('/test',(req,res)=>{
-    res.json({
-        message:"Server Sent Hello"
-    });
-});
-//TESTING PURPOSE
-
 const adminRouter = require('./routes/admin');
 app.use('/admin_panel', adminRouter);
 

@@ -1,12 +1,11 @@
+const uri = "mongodb+srv://MHMDsanan:GvQNwoH8H12yLIoJ@clusture.lhi7nuz.mongodb.net/?retryWrites=true&w=majority";
 const mongoose=require('mongoose');
-mongoose.set('strictQuery', true);
-mongoose.connect('mongodb://localhost:27017/eCommerce');
-
-mongoose.connection.on("connected",(err)=>{  
+mongoose.set('strictQuery',true);
+mongoose.connect(uri);
+mongoose.connection.on("connected",(err)=>{
     if(err){
-        console.log('error'); 
-    }
-    else{
-        console.log("mongodb connected successfuly");
+        console.log(err);
+    }else{
+        console.log("db connected");
     }
 })
